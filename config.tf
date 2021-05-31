@@ -1,4 +1,5 @@
 provider "aws" {
+  alias   = "eu_west_1"
   region  = var.eu_west_1
 }
 
