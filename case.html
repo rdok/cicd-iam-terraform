@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Title</title>
+    <meta charset="utf-8">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+        @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+        @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+
+        body { font-family: 'Droid Serif'; }
+        h1, h2, h3 {
+            font-family: 'Yanone Kaffeesatz';
+            font-weight: normal;
+        }
+        .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+    </style>
+</head>
+<body>
+<textarea id="source">
+
+class: center, middle
+# Automate CI/CD resources management
+---
+# Problem
+Developers are manully creating the CI/CD resources.
+- Deployment buckets
+- IAM user
+- Resource policies
+---
+# Problem Effects
+Developers:
+- spent over and over again the time to create the same or similar policies
+- Many team members have to re-do this :point_up:
+- In-experienced or developers having forgotten, have to spent slow thinking to
+    find out or remember what policies are required.
+- Due to the silo, no opportunity to review or create conventions
+---
+# Solution
+Use terraform to automate the management of the resources required for CI/C
+---
+# Additional Value
+- Re-usable templates. E.g. aws-sam template, sqs template, sns template
+- Invest in re-usable long term knolwedge
+- Any developer regardless of their terraform or aws knowledge can create PR
+- More knowledge sharing & transparency of policies
+---
+# Workflow
+- Copy an existing terraform file setup
+- Modify the policy action templates accordingly
+- Create PR
+---
+# Next
+Ordered by priority
+1. On next new serverless repo, use this workflow to start automating CI/CD resources.
+2. When working with a existing serverless repo
+   - which requires policies change, use that opportunity to automate the CI/CD resources.
+   - which requires code change, use that opportunity to automate the CI/CD resources.
+
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js">
+</script>
+<script>
+  var slideshow = remark.create();
+</script>
+</body>
+</html>
