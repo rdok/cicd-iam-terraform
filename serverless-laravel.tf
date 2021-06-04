@@ -40,13 +40,12 @@ data "aws_iam_policy_document" "serverless-laravel" {
     sid     = replace(var.serverless-laravel-cicd-name, "-", "")
     actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions)
     resources = [
-      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-${var.prod}-${var.serverless-laravel}/*",
-      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-${var.test}-${var.serverless-laravel}/*",
+      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
       "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-${var.prod}-${var.serverless-laravel}",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-${var.test}-${var.serverless-laravel}",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.serverless-laravel}",
+      "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.serverless-laravel}",
     ]
   }
 }
@@ -65,15 +64,13 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel" {
 data "aws_iam_policy_document" "serverless-laravel-certificate" {
   statement {
     sid     = replace("${var.serverless-laravel-cicd-name}-certificate", "-", "")
-    actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions)
+    actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions)
     resources = [
-      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-${var.prod}-${var.serverless-laravel}/*",
-      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-${var.test}-${var.serverless-laravel}/*",
+      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
       "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-${var.prod}-${var.serverless-laravel}",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-${var.test}-${var.serverless-laravel}",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.serverless-laravel}",
     ]
   }
 }
