@@ -195,14 +195,8 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-cdn" {
 data "aws_iam_policy_document" "serverless-laravel-api" {
   statement {
     sid = replace("${var.serverless-laravel-cicd-name}-api", "-", "")
-    actions = [
-      "apigateway:DELETE",
-      "apigateway:PUT",
-      "apigateway:PATCH",
-      "apigateway:POST",
-      "apigateway:GET"
-    ]
-    resources = [ "arn:aws:apigateway:*::*" ]
+    actions = [ "apigateway:*" ]
+    resources = [ "*" ]
 
   }
 }
