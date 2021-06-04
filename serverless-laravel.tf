@@ -122,3 +122,39 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-certificate-gen" {
   policy_arn = aws_iam_policy.serverless-laravel-certificate-gen.arn
   user       = aws_iam_user.serverless-laravel-cicd.name
 }
+
+data "aws_iam_policy_document" "serverless-laravel-static" {
+  statement {
+    sid       = replace("${var.serverless-laravel-cicd-name}-uploadToBucket", "-", "")
+    actions   = ["s3:PutObject", "s3:DeleteObject"]
+    resources = ["arn:aws:s3:::${var.serverless-laravel}", ]
+  }
+
+  statement {
+    sid = replace("${var.serverless-laravel-cicd-name}-configureBucket", "-", "")
+    actions = [
+      "s3:GetBucketPolicyStatus",
+      "s3:DeleteBucketWebsite",
+      "s3:PutBucketWebsite",
+      "s3:PutBucketAcl",
+      "s3:PutBucketPolicy",
+      "s3:CreateBucket",
+      "s3:GetBucketAcl",
+      "s3:DeleteBucketPolicy",
+      "s3:DeleteBucket",
+      "s3:GetBucketPolicy"
+    ]
+    resources = [ "arn:aws:s3:::${var.serverless-laravel}" ]
+  }
+}
+
+resource "aws_iam_user_policy_attachment" "serverless-laravel-static" {
+  policy_arn = aws_iam_policy.serverless-laravel-static.arn
+  user       = aws_iam_user.serverless-laravel-cicd.name
+}
+
+resource "aws_iam_policy" "serverless-laravel-static" {
+  name   = "StaticWebsiteFor${var.serverless-laravel-cicd-name}"
+  path   = "/${var.serverless-laravel-cicd-name}/"
+  policy = data.aws_iam_policy_document.serverless-laravel-static.json
+}
