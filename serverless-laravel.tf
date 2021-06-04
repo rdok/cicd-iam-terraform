@@ -134,8 +134,6 @@ data "aws_iam_policy_document" "serverless-laravel-static" {
     sid = replace("${var.serverless-laravel-cicd-name}-configureBucket", "-", "")
     actions = [
       "s3:GetBucketPolicyStatus",
-      "s3:DeleteBucketWebsite",
-      "s3:PutBucketWebsite",
       "s3:PutBucketAcl",
       "s3:PutBucketPolicy",
       "s3:CreateBucket",
@@ -154,7 +152,7 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-static" {
 }
 
 resource "aws_iam_policy" "serverless-laravel-static" {
-  name   = "StaticWebsiteFor${var.serverless-laravel-cicd-name}"
+  name   = "${var.serverless-laravel-cicd-name}ForStatic"
   path   = "/${var.serverless-laravel-cicd-name}/"
   policy = data.aws_iam_policy_document.serverless-laravel-static.json
 }
