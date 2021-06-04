@@ -65,15 +65,13 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-certificate" {
 data "aws_iam_policy_document" "serverless-laravel-certificate-gen" {
   statement {
     sid       = replace("${var.serverless-laravel-cicd-name}-request-certificate", "-", "")
-    actions   = ["acm:RequestCertificate"]
+    actions   = ["acm:RequestCertificate", "acm:DeleteCertificate", "acm:DescribeCertificate"]
     resources = ["*"]
   }
 
   statement {
     sid = replace("${var.serverless-laravel-cicd-name}-change-certificate", "-", "")
     actions = [
-      "acm:DeleteCertificate",
-      "acm:DescribeCertificate",
       "route53:GetChange",
       "route53:GetHostedZone",
       "route53:ChangeResourceRecordSets"
