@@ -76,7 +76,7 @@ data "aws_iam_policy_document" "serverless-laravel-domain" {
   }
 
   statement {
-    sid = replace("${var.serverless-laravel}-change-certificate", "-", "")
+    sid = replace("${var.serverless-laravel-cicd-name}-change-certificate", "-", "")
     actions = [
       "acm:DeleteCertificate",
       "acm:DescribeCertificate",
