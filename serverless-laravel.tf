@@ -104,8 +104,7 @@ data "aws_iam_policy_document" "serverless-laravel-certificate-gen" {
       "route53:ChangeResourceRecordSets"
     ]
     resources = [
-      "arn:aws:acm:${var.org}-${var.test}-${var.serverless-laravel}:${var.aws_account_id}:certificate/*",
-      "arn:aws:acm:${var.org}-${var.prod}-${var.serverless-laravel}:${var.aws_account_id}:certificate/*",
+      "arn:aws:acm:${var.org}-*-${var.serverless-laravel}:${var.aws_account_id}:certificate/*",
       "arn:aws:route53:::hostedzone/${var.base_domain_route_53_hosted_zone_id}",
       "arn:aws:route53:::change/*"
     ]
@@ -127,7 +126,7 @@ data "aws_iam_policy_document" "serverless-laravel-static" {
   statement {
     sid       = replace("${var.serverless-laravel-cicd-name}-uploadToBucket", "-", "")
     actions   = ["s3:PutObject", "s3:DeleteObject"]
-    resources = ["arn:aws:s3:::${var.serverless-laravel}", ]
+    resources = ["arn:aws:s3:::${var.org}-*-${var.serverless-laravel}", ]
   }
 
   statement {
@@ -142,7 +141,7 @@ data "aws_iam_policy_document" "serverless-laravel-static" {
       "s3:DeleteBucket",
       "s3:GetBucketPolicy"
     ]
-    resources = [ "arn:aws:s3:::${var.serverless-laravel}" ]
+    resources = [ "arn:aws:s3:::${var.org}-*-${var.serverless-laravel}" ]
   }
 }
 
