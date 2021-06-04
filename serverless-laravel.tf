@@ -191,3 +191,29 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-cdn" {
   policy_arn = aws_iam_policy.serverless-laravel-cdn.arn
   user       = aws_iam_user.serverless-laravel-cicd.name
 }
+
+data "aws_iam_policy_document" "serverless-laravel-api" {
+  statement {
+    sid = replace("${var.serverless-laravel-cicd-name}-api", "-", "")
+    actions = [
+      "apigateway:DELETE",
+      "apigateway:PUT",
+      "apigateway:PATCH",
+      "apigateway:POST",
+      "apigateway:GET"
+    ]
+    resources = [ "arn:aws:apigateway:*::*" ]
+
+  }
+}
+
+resource "aws_iam_policy" "serverless-laravel-api" {
+  name   = "APIFor${var.serverless-laravel-cicd-name}"
+  path   = "/${var.serverless-laravel-cicd-name}/"
+  policy = data.aws_iam_policy_document.serverless-laravel-api.json
+}
+
+resource "aws_iam_user_policy_attachment" "serverless-laravel-api" {
+  policy_arn = aws_iam_policy.serverless-laravel-api.arn
+  user       = aws_iam_user.serverless-laravel-cicd.name
+}
