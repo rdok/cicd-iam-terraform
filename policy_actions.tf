@@ -140,3 +140,14 @@ variable "ssm_store_param" {
     "ssm:GetParameters"
   ]
 }
+
+variable "domain_certificate" {
+  description = "Authorise generating domain certificate"
+  default = [
+    "acm:DeleteCertificate",
+    "acm:DescribeCertificate",
+    "route53:GetChange",
+    "route53:GetHostedZone",
+    "route53:ChangeResourceRecordSets"
+  ]
+}
