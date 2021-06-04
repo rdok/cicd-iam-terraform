@@ -25,3 +25,7 @@ variable "us_east_1" {
 variable "aws_account_id" {
   type = string
 }
+
+variable "base_domain_route_53_hosted_zone_id" {
+  type = string
+}
