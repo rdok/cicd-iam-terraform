@@ -1,11 +1,11 @@
 provider "aws" {
-  alias   = "eu_west_1"
-  region  = var.eu_west_1
+  alias  = "eu_west_1"
+  region = var.eu_west_1
 }
 
 provider "aws" {
-  alias   = "us_east_1"
-  region  = var.us_east_1
+  alias  = "us_east_1"
+  region = var.us_east_1
 }
 
 terraform {
