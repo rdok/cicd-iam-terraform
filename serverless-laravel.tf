@@ -122,7 +122,13 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-certificate-gen" {
 data "aws_iam_policy_document" "serverless-laravel-s3-storage" {
   statement {
     sid       = replace("${var.serverless-laravel-cicd-name}-uploadToBucket", "-", "")
-    actions   = ["s3:PutObject", "s3:DeleteObject"]
+    actions   = [
+      "s3:PutObject",
+      "s3:ListBucketVersions",
+      "s3:ListBucket",
+      "s3:DeleteObject",
+      "s3:ListMultipartUploadParts"
+    ]
     resources = ["arn:aws:s3:::${var.org}-*-${var.serverless-laravel}", ]
   }
 
