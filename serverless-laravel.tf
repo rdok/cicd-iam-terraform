@@ -3,21 +3,21 @@ variable "serverless-laravel" {
   type    = string
 }
 
-variable "serverless-laravel-cicd-iam-name" {
+variable "serverless-laravel-cicd-name" {
   default = "serverless-laravel-cicd"
   type    = string
 }
 
 resource "aws_iam_user" "serverless-laravel-cicd" {
-  name = var.serverless-laravel-cicd-iam-name
+  name = var.serverless-laravel-cicd-name
   tags = {
-    Name = var.serverless-laravel-cicd-iam-name
+    Name = var.serverless-laravel-cicd-name
   }
 }
 
 data "aws_iam_policy_document" "serverless-laravel-serverless" {
   statement {
-    sid     = replace("${var.serverless-laravel-cicd-iam-name}-serverless", "-", "")
+    sid     = replace("${var.serverless-laravel-cicd-name}-serverless", "-", "")
     actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions)
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-${var.prod}-${var.serverless-laravel}/*",
@@ -36,8 +36,8 @@ data "aws_iam_policy_document" "serverless-laravel-serverless" {
 }
 
 resource "aws_iam_policy" "serverless-laravel" {
-  name   = "AuthFor${var.serverless-laravel-cicd-iam-name}"
-  path   = "/${var.serverless-laravel-cicd-iam-name}/"
+  name   = "AuthFor${var.serverless-laravel-cicd-name}"
+  path   = "/${var.serverless-laravel-cicd-name}/"
   policy = data.aws_iam_policy_document.serverless-laravel-serverless.json
 }
 
@@ -48,7 +48,7 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-serverless" {
 
 data "aws_iam_policy_document" "serverless-laravel-global-resources" {
   statement {
-    sid     = replace("${var.serverless-laravel-cicd-iam-name}-global", "-", "")
+    sid     = replace("${var.serverless-laravel-cicd-name}-global", "-", "")
     actions = concat(var.lambda_actions_global, var.sam_validate, var.apigateway_actions_global)
     resources = [
     "*"]
@@ -56,8 +56,8 @@ data "aws_iam_policy_document" "serverless-laravel-global-resources" {
 }
 
 resource "aws_iam_policy" "serverless-laravel-global" {
-  name   = "GlobalAuthFor${var.serverless-laravel-cicd-iam-name}"
-  path   = "/${var.serverless-laravel-cicd-iam-name}/"
+  name   = "GlobalAuthFor${var.serverless-laravel-cicd-name}"
+  path   = "/${var.serverless-laravel-cicd-name}/"
   policy = data.aws_iam_policy_document.serverless-laravel-global-resources.json
 }
 
@@ -68,7 +68,7 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-global" {
 
 data "aws_iam_policy_document" "serverless-laravel-domain" {
   statement {
-    sid = replace("${var.serverless-laravel}-request-certificate", "-", "")
+    sid = replace("${var.serverless-laravel-cicd-name}-request-certificate", "-", "")
     actions = [
     "acm:RequestCertificate"]
     resources = [
@@ -94,8 +94,8 @@ data "aws_iam_policy_document" "serverless-laravel-domain" {
 
 
 resource "aws_iam_policy" "serverless-laravel-domain" {
-  name   = "DomainManagerFor${var.serverless-laravel}"
-  path   = "/${var.serverless-laravel}/"
+  name   = "DomainManagerFor${var.serverless-laravel-cicd-name}"
+  path   = "/${var.serverless-laravel-cicd-name}/"
   policy = data.aws_iam_policy_document.serverless-laravel-domain.json
 }
 
