@@ -155,3 +155,42 @@ resource "aws_iam_policy" "serverless-laravel-s3-storage" {
   path   = "/${var.serverless-laravel-cicd-name}/"
   policy = data.aws_iam_policy_document.serverless-laravel-s3-storage.json
 }
+
+data "aws_iam_policy_document" "serverless-laravel-cdn" {
+  statement {
+    sid = replace("${var.serverless-laravel-cicd-name}-cdn", "-", "")
+    actions = [
+      "cloudfront:GetCloudFrontOriginAccessIdentityConfig",
+      "cloudfront:ListCloudFrontOriginAccessIdentities",
+      "cloudfront:TagResource",
+      "cloudfront:DeleteCloudFrontOriginAccessIdentity",
+      "cloudfront:CreateDistributionWithTags",
+      "cloudfront:CreateDistribution",
+      "cloudfront:CreateInvalidation",
+      "cloudfront:CreateCloudFrontOriginAccessIdentity",
+      "cloudfront:GetDistribution",
+      "cloudfront:GetCloudFrontOriginAccessIdentity",
+      "cloudfront:UpdateDistribution",
+      "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+      "cloudfront:UntagResource"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid       = replace("${var.serverless-laravel-cicd-name}-kms", "-", "")
+    actions   = ["kms:DescribeKey", "kms:CreateGrant"]
+    resources = ["arn:aws:kms:${var.eu_west_1}:${var.aws_account_id}:key/*"]
+  }
+}
+
+resource "aws_iam_policy" "serverless-laravel-cdn" {
+  name   = "CDNFor${var.serverless-laravel-cicd-name}"
+  path   = "/${var.serverless-laravel-cicd-name}/"
+  policy = data.aws_iam_policy_document.serverless-laravel-cdn.json
+}
+
+resource "aws_iam_user_policy_attachment" "serverless-laravel-cdn" {
+  policy_arn = aws_iam_policy.serverless-laravel-cdn.arn
+  user       = aws_iam_user.serverless-laravel-cicd.name
+}
