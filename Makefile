@@ -1,2 +1,2 @@
 format:
-    terraform fmt
+	terraform fmt
