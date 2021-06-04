@@ -25,6 +25,8 @@ data "aws_iam_policy_document" "serverless-laravel-serverless" {
       "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-${var.prod}-${var.serverless-laravel}",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-${var.test}-${var.serverless-laravel}",
       "arn:aws:cloudwatch:${var.eu_west_1}:${var.aws_account_id}:alarm:${var.org}-${var.prod}-${var.serverless-laravel}",
