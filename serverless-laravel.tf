@@ -141,7 +141,7 @@ data "aws_iam_policy_document" "serverless-laravel-static" {
       "s3:DeleteBucket",
       "s3:GetBucketPolicy"
     ]
-    resources = [ "arn:aws:s3:::${var.org}-*-${var.serverless-laravel}" ]
+    resources = ["arn:aws:s3:::${var.org}-*-${var.serverless-laravel}"]
   }
 }
 
