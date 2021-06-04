@@ -122,7 +122,7 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-certificate-gen" {
   user       = aws_iam_user.serverless-laravel-cicd.name
 }
 
-data "aws_iam_policy_document" "serverless-laravel-static" {
+data "aws_iam_policy_document" "serverless-laravel-s3-storage" {
   statement {
     sid       = replace("${var.serverless-laravel-cicd-name}-uploadToBucket", "-", "")
     actions   = ["s3:PutObject", "s3:DeleteObject"]
@@ -145,13 +145,13 @@ data "aws_iam_policy_document" "serverless-laravel-static" {
   }
 }
 
-resource "aws_iam_user_policy_attachment" "serverless-laravel-static" {
-  policy_arn = aws_iam_policy.serverless-laravel-static.arn
+resource "aws_iam_user_policy_attachment" "serverless-laravel-s3-storage" {
+  policy_arn = aws_iam_policy.serverless-laravel-s3-storage.arn
   user       = aws_iam_user.serverless-laravel-cicd.name
 }
 
-resource "aws_iam_policy" "serverless-laravel-static" {
-  name   = "${var.serverless-laravel-cicd-name}ForStatic"
+resource "aws_iam_policy" "serverless-laravel-s3-storage" {
+  name   = "${var.serverless-laravel-cicd-name}ForS3Storage"
   path   = "/${var.serverless-laravel-cicd-name}/"
-  policy = data.aws_iam_policy_document.serverless-laravel-static.json
+  policy = data.aws_iam_policy_document.serverless-laravel-s3-storage.json
 }
