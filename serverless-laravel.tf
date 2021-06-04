@@ -87,7 +87,7 @@ data "aws_iam_policy_document" "serverless-laravel-certificate-gen" {
 }
 
 resource "aws_iam_policy" "serverless-laravel-certificate-gen" {
-  name   = "DomainManagerFor${var.serverless-laravel-cicd-name}"
+  name   = "DomainManagerFor${var.serverless-laravel-cicd-name}CertificateGen"
   path   = "/${var.serverless-laravel-cicd-name}/"
   policy = data.aws_iam_policy_document.serverless-laravel-certificate.json
 }
