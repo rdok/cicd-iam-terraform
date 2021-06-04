@@ -80,6 +80,7 @@ data "aws_iam_policy_document" "serverless-laravel-certificate-gen" {
     ]
     resources = [
       "arn:aws:acm:${var.org}-${var.test}-${var.serverless-laravel}:${var.aws_account_id}:certificate/*",
+      "arn:aws:acm:${var.org}-${var.prod}-${var.serverless-laravel}:${var.aws_account_id}:certificate/*",
       "arn:aws:route53:::hostedzone/${var.base_domain_route_53_hosted_zone_id}",
       "arn:aws:route53:::change/*"
     ]
