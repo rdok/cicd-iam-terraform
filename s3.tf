@@ -9,11 +9,11 @@ resource "aws_s3_bucket" "prod-cicd-us-east-1" {
 }
 
 resource "aws_s3_bucket" "test-cicd-eu-west-1" {
-  bucket = "${var.org}-test-cicd-${var.eu_west_1}"
+  bucket   = "${var.org}-test-cicd-${var.eu_west_1}"
   provider = aws.eu_west_1
 }
 
 resource "aws_s3_bucket" "prod-cicd-eu-west-1" {
-  bucket = "${var.org}-prod-cicd-${var.eu_west_1}"
+  bucket   = "${var.org}-prod-cicd-${var.eu_west_1}"
   provider = aws.eu_west_1
 }
