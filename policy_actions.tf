@@ -36,7 +36,8 @@ variable "lambda_actions" {
     "lambda:UpdateFunctionEventInvokeConfig",
     "lambda:DeleteFunctionEventInvokeConfig",
     "lambda:AddPermission",
-    "lambda:RemovePermission"
+    "lambda:RemovePermission",
+    "lambda:InvokeFunction"
   ]
 }
 
