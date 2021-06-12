@@ -37,8 +37,11 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-global" {
 
 data "aws_iam_policy_document" "serverless-laravel" {
   statement {
-    sid     = replace(var.serverless-laravel-cicd-name, "-", "")
-    actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions)
+    sid = replace(var.serverless-laravel-cicd-name, "-", "")
+    actions = concat(
+      var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions,
+      ["secretsmanager:GetSecretValue"]
+    )
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
       "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
@@ -46,6 +49,7 @@ data "aws_iam_policy_document" "serverless-laravel" {
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.serverless-laravel}",
       "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.serverless-laravel}",
+      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.serverless-laravel}",
     ]
   }
 }
@@ -121,8 +125,8 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-certificate-gen" {
 
 data "aws_iam_policy_document" "serverless-laravel-s3-storage" {
   statement {
-    sid       = replace("${var.serverless-laravel-cicd-name}-uploadToBucket", "-", "")
-    actions   = [
+    sid = replace("${var.serverless-laravel-cicd-name}-uploadToBucket", "-", "")
+    actions = [
       "s3:PutObject",
       "s3:ListBucketVersions",
       "s3:ListBucket",
@@ -200,9 +204,9 @@ resource "aws_iam_user_policy_attachment" "serverless-laravel-cdn" {
 
 data "aws_iam_policy_document" "serverless-laravel-api" {
   statement {
-    sid = replace("${var.serverless-laravel-cicd-name}-api", "-", "")
-    actions = [ "apigateway:*" ]
-    resources = [ "*" ]
+    sid       = replace("${var.serverless-laravel-cicd-name}-api", "-", "")
+    actions   = ["apigateway:*"]
+    resources = ["*"]
 
   }
 }
