@@ -55,6 +55,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
       "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel-stack-locator}",
       "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel-stack-locator}",
       "arn:aws:rds:${var.eu_west_1}:${var.aws_account_id}:cluster:${var.org}-*-${var.aurora-for-serverless-laravel-stack-locator}",
+      "arn:aws:rds:${var.eu_west_1}:${var.aws_account_id}:cluster-snapshot:${var.org}-*-${var.aurora-for-serverless-laravel-stack-locator}",
     ]
   }
 }
