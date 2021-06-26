@@ -34,36 +34,36 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global"
   policy_arn = aws_iam_policy.aurora-for-serverless-laravel-global.arn
 }
 
-//data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
-//  statement {
-//    sid = replace(var.aurora-for-serverless-laravel, "-", "")
-//    actions = concat(
-//      var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions,
-//      ["secretsmanager:GetSecretValue"]
-//    )
-//    resources = [
-//      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}/*",
-//      "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
-//      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
-//      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
-//      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}",
-//      "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}",
-//      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}",
-//    ]
-//  }
-//}
-//
-//resource "aws_iam_policy" "aurora-for-serverless-laravel" {
-//  name   = "AuthFor${var.aurora-for-serverless-laravel}"
-//path   = "/${var.org}/"
-//  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel.json
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global" {
-//  role       = aws_iam_role.aurora-for-serverless-laravel.name
-//  policy_arn = aws_iam_policy.aurora-for-serverless-laravel.arn
-//}
-//
+data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
+  statement {
+    sid = replace(var.aurora-for-serverless-laravel, "-", "")
+    actions = concat(
+      var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions,
+      ["secretsmanager:GetSecretValue"]
+    )
+    resources = [
+      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}/*",
+      "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}",
+      "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}",
+      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}",
+    ]
+  }
+}
+
+resource "aws_iam_policy" "aurora-for-serverless-laravel" {
+  name   = "Main${var.aurora-for-serverless-laravel}"
+  path   = "/${var.org}/"
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel.json
+}
+
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global" {
+  role       = aws_iam_role.aurora-for-serverless-laravel.name
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel.arn
+}
+
 //data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate" {
 //  statement {
 //    sid     = replace("${var.aurora-for-serverless-laravel}-certificate", "-", "")

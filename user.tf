@@ -13,8 +13,9 @@ resource "aws_iam_user_policy" "cicd-allow-assume-role" {
 
 data "aws_iam_policy_document" "cicd-allow-assume-role" {
   statement {
-    sid       = "AllowAssumeRole"
-    actions   = ["sts:AssumeRole"]
+    sid     = "AllowAssumeRole"
+    actions = ["sts:AssumeRole"]
+    //    resources = ["arn:aws:iam::${var.aws_account_id}:role/${var.org}/*"]
     resources = [aws_iam_role.aurora-for-serverless-laravel.arn]
   }
 }
