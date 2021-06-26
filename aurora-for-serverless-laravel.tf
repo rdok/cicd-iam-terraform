@@ -23,17 +23,17 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
   }
 }
 
-//resource "aws_iam_policy" "aurora-for-serverless-laravel-global" {
-//  name   = "GlobalAuthFor${var.aurora-for-serverless-laravel}"
-//  path   = "/${var.aurora-for-serverless-laravel}/"
-//  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global" {
-//  role       = aws_iam_role.aurora-for-serverless-laravel.name
-//  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-global.arn
-//}
-//
+resource "aws_iam_policy" "aurora-for-serverless-laravel-global" {
+  name   = "GlobalFor${var.aurora-for-serverless-laravel}"
+  path   = "/${var.aurora-for-serverless-laravel}/"
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
+}
+
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global" {
+  role       = aws_iam_role.aurora-for-serverless-laravel.name
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-global.arn
+}
+
 //data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
 //  statement {
 //    sid = replace(var.aurora-for-serverless-laravel, "-", "")
