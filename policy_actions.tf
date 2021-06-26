@@ -92,7 +92,10 @@ variable "vpc_endpoints_global" {
 
 variable "aurora_actions" {
   description = "Defaults permissions for managing aurora."
-  default     = ["rds:CreateDBCluster", "rds:DescribeDBClusters", "rds:CreateDBClusterSnapshot"]
+  default     = [
+    "rds:CreateDBCluster", "rds:DescribeDBClusters",
+    "rds:CreateDBClusterSnapshot", "rds:ModifyDBCluster"
+  ]
 }
 
 variable "lambda_actions_global" {
