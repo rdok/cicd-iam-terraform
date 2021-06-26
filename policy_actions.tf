@@ -95,7 +95,7 @@ variable "aurora_actions" {
   default = [
     "rds:CreateDBCluster", "rds:DescribeDBClusters",
     "rds:CreateDBClusterSnapshot", "rds:ModifyDBCluster",
-    "rds:DescribeDBClusterSnapshots"
+    "rds:DescribeDBClusterSnapshots", "rds:DeleteDBCluster"
   ]
 }
 
