@@ -16,7 +16,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
     actions = concat(
       var.lambda_actions_global, var.sam_validate_global,
       var.apigateway_actions_global, var.describe_actions_global,
-      var.secrets_generate_global
+      var.secrets_generate_actions_global
     )
     resources = ["*"]
   }
@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
     sid = replace(var.aurora-for-serverless-laravel, "-", "")
     actions = concat(
       var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions,
-      var.s3_cicd_actions, var.secrets_generate
+      var.s3_cicd_actions, var.secrets_generate_actions
     )
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}*",

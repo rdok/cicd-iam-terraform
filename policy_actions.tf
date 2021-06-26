@@ -72,12 +72,12 @@ variable "cloudformation_actions" {
   ]
 }
 
-variable "secrets_generate" {
-  description = "Defaults permissions for generating secrets."
-    default     = ["secretsmanager:CreateSecret"]
+variable "secrets_generate_actions" {
+  description = "Default permissions for generating secrets."
+    default     = ["secretsmanager:CreateSecret", "secretsmanager:GetSecretValue"]
 }
 
-variable "secrets_generate_global" {
+variable "secrets_generate_actions_global" {
   description = "Global permissions for generating secrets."
   default     = ["secretsmanager:GetRandomPassword"]
 }
