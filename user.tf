@@ -31,6 +31,13 @@ data "aws_iam_policy_document" "cicd-allow--trusted-identifiers" {
       identifiers = [aws_iam_user.cicd-os.arn]
     }
   }
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["cloudformation.amazonaws.com"]
+    }
+  }
 }
 
 variable "cicd-name" {
