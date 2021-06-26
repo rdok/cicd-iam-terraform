@@ -12,10 +12,6 @@ resource "aws_iam_role" "aurora-for-serverless-laravel" {
   name = var.aurora-for-serverless-laravel
   tags = { Name = var.aurora-for-serverless-laravel }
   path = "/${var.aurora-for-serverless-laravel}/"
-  inline_policy {
-    name   = "Main"
-    policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
-  }
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
 }
 
