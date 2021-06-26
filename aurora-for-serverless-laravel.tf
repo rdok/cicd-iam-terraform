@@ -38,7 +38,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
     sid = replace(var.aurora-for-serverless-laravel, "-", "")
     actions = concat(
       var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions,
-      var.s3_cicd_actions, var.secrets_generate_actions
+      var.s3_cicd_actions, var.secrets_generate_actions, var.aurora_actions
     )
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}*",
@@ -48,6 +48,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}*",
       "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}*",
       "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}*",
+      "arn:aws:rds:${var.eu_west_1}:${var.aws_account_id}:cluster:${var.org}-*-${var.aurora-for-serverless-laravel}*",
     ]
   }
 }

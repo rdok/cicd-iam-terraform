@@ -82,6 +82,11 @@ variable "secrets_generate_actions_global" {
   default     = ["secretsmanager:GetRandomPassword"]
 }
 
+variable "aurora_actions" {
+  description = "Defaults permissions for managing aurora."
+  default     = ["rds:CreateDBCluster"]
+}
+
 variable "lambda_actions_global" {
   description = "Default permission for managing lambda (global) resources."
   default = [
