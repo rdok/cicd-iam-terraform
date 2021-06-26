@@ -87,7 +87,7 @@ variable "secrets_generate_actions_global" {
 
 variable "vpc_endpoints_global" {
   description = "Global permissions for managing vpc endpoints."
-  default     = ["ec2:CreateVpcEndpoint", "ec2:DeleteVpcEndpoints"]
+  default     = ["ec2:CreateVpcEndpoint", "ec2:DeleteVpcEndpoints", "ec2:DescribeVpcEndpoints"]
 }
 
 variable "aurora_actions" {
