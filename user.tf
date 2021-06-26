@@ -60,6 +60,8 @@ data "aws_iam_policy_document" "cicd-bucket" {
       "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
     ]
   }
 }
