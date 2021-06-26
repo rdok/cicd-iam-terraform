@@ -127,7 +127,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certifi
   policy_arn = aws_iam_policy.aurora-for-serverless-laravel-certificate-domain.arn
 }
 
-data "aws_iam_policy_document" "aurora-for-serverless-laravel-s3-storage" {
+data "aws_iam_policy_document" "aurora-for-serverless-laravel-s3" {
   statement {
     sid = replace("${var.aurora-for-serverless-laravel}-uploadToBucket", "-", "")
     actions = [
@@ -156,15 +156,15 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-s3-storage" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-s3-storage" {
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-s3" {
   role       = aws_iam_role.aurora-for-serverless-laravel.name
-  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-s3-storage.arn
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-s3.arn
 }
 
-resource "aws_iam_policy" "aurora-for-serverless-laravel-s3-storage" {
-  name   = "${var.aurora-for-serverless-laravel}ForS3Storage"
+resource "aws_iam_policy" "aurora-for-serverless-laravel-s3" {
+  name   = "${var.aurora-for-serverless-laravel}-s3"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-s3-storage.json
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-s3.json
 }
 
 data "aws_iam_policy_document" "aurora-for-serverless-laravel-cdn" {
