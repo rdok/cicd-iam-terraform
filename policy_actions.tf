@@ -83,6 +83,15 @@ variable "lambda_actions_global" {
   ]
 }
 
+variable "describe_actions_global" {
+  description = "Global permissions for descriptions."
+  default = [
+    "ec2:DescribeVpcs",
+    "ec2:DescribeSubnets",
+    "ec2:DescribeSecurityGroups"
+  ]
+}
+
 variable "apigateway_actions_global" {
   description = "Default permission for managing API Gateways."
   default     = ["apigateway:*"]

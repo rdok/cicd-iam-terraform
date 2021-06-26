@@ -12,8 +12,13 @@ resource "aws_iam_role" "aurora-for-serverless-laravel" {
 
 data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
   statement {
-    sid       = replace("${var.aurora-for-serverless-laravel}-global", "-", "")
-    actions   = concat(var.lambda_actions_global, var.sam_validate_global, var.apigateway_actions_global)
+    sid = replace("${var.aurora-for-serverless-laravel}-global", "-", "")
+    actions = concat(
+      var.lambda_actions_global,
+      var.sam_validate_global,
+      var.apigateway_actions_global,
+      var.describe_actions_global
+    )
     resources = ["*"]
   }
 }
