@@ -74,10 +74,10 @@ variable "cloudformation_actions" {
 
 variable "secrets_generate_actions" {
   description = "Default permissions for generating secrets."
-    default     = [
-      "secretsmanager:CreateSecret", "secretsmanager:GetSecretValue",
-      "secretsmanager:PutSecretValue"
-    ]
+  default = [
+    "secretsmanager:CreateSecret", "secretsmanager:GetSecretValue",
+    "secretsmanager:PutSecretValue"
+  ]
 }
 
 variable "secrets_generate_actions_global" {

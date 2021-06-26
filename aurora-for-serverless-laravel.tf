@@ -127,46 +127,46 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certifi
   policy_arn = aws_iam_policy.aurora-for-serverless-laravel-certificate-domain.arn
 }
 
-//data "aws_iam_policy_document" "aurora-for-serverless-laravel-s3-storage" {
-//  statement {
-//    sid = replace("${var.aurora-for-serverless-laravel}-uploadToBucket", "-", "")
-//    actions = [
-//      "s3:PutObject",
-//      "s3:ListBucketVersions",
-//      "s3:ListBucket",
-//      "s3:DeleteObject",
-//      "s3:ListMultipartUploadParts"
-//    ]
-//    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}*", ]
-//  }
-//
-//  statement {
-//    sid = replace("${var.aurora-for-serverless-laravel}-configureBucket", "-", "")
-//    actions = [
-//      "s3:GetBucketPolicyStatus",
-//      "s3:PutBucketAcl",
-//      "s3:PutBucketPolicy",
-//      "s3:CreateBucket",
-//      "s3:GetBucketAcl",
-//      "s3:DeleteBucketPolicy",
-//      "s3:DeleteBucket",
-//      "s3:GetBucketPolicy"
-//    ]
-//    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}*"]
-//  }
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-s3-storage" {
-//  role       = aws_iam_role.aurora-for-serverless-laravel.name
-//  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-s3-storage.arn
-//}
-//
-//resource "aws_iam_policy" "aurora-for-serverless-laravel-s3-storage" {
-//  name   = "${var.aurora-for-serverless-laravel}ForS3Storage"
-//path   = "/${var.org}/"
-//  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-s3-storage.json
-//}
-//
+data "aws_iam_policy_document" "aurora-for-serverless-laravel-s3-storage" {
+  statement {
+    sid = replace("${var.aurora-for-serverless-laravel}-uploadToBucket", "-", "")
+    actions = [
+      "s3:PutObject",
+      "s3:ListBucketVersions",
+      "s3:ListBucket",
+      "s3:DeleteObject",
+      "s3:ListMultipartUploadParts"
+    ]
+    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}*", ]
+  }
+
+  statement {
+    sid = replace("${var.aurora-for-serverless-laravel}-configureBucket", "-", "")
+    actions = [
+      "s3:GetBucketPolicyStatus",
+      "s3:PutBucketAcl",
+      "s3:PutBucketPolicy",
+      "s3:CreateBucket",
+      "s3:GetBucketAcl",
+      "s3:DeleteBucketPolicy",
+      "s3:DeleteBucket",
+      "s3:GetBucketPolicy"
+    ]
+    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}*"]
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-s3-storage" {
+  role       = aws_iam_role.aurora-for-serverless-laravel.name
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-s3-storage.arn
+}
+
+resource "aws_iam_policy" "aurora-for-serverless-laravel-s3-storage" {
+  name   = "${var.aurora-for-serverless-laravel}ForS3Storage"
+  path   = "/${var.org}/"
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-s3-storage.json
+}
+
 //data "aws_iam_policy_document" "aurora-for-serverless-laravel-cdn" {
 //  statement {
 //    sid = replace("${var.aurora-for-serverless-laravel}-cdn", "-", "")
