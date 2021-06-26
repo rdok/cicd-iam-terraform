@@ -94,7 +94,8 @@ variable "aurora_actions" {
   description = "Defaults permissions for managing aurora."
   default     = [
     "rds:CreateDBCluster", "rds:DescribeDBClusters",
-    "rds:CreateDBClusterSnapshot", "rds:ModifyDBCluster"
+    "rds:CreateDBClusterSnapshot", "rds:ModifyDBCluster",
+    "rds:CreateDBClusterSnapshot"
   ]
 }
 
