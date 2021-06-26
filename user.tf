@@ -57,7 +57,6 @@ data "aws_iam_policy_document" "cicd-bucket" {
     actions = concat(var.cloudformation_actions, var.s3_cicd_actions)
     resources = [
       "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
-      "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
