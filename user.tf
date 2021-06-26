@@ -47,11 +47,6 @@ resource "aws_iam_user_policy_attachment" "cicd-bucket" {
 
 data "aws_iam_policy_document" "cicd-bucket" {
   statement {
-    sid       = replace("${var.aurora-for-serverless-laravel}-certificate-global", "-", "")
-    actions   = concat(var.lambda_actions_global, var.sam_validate_global, var.apigateway_actions_global)
-    resources = ["*"]
-  }
-  statement {
     sid     = replace("${var.serverless-laravel-cicd-name}-certificate", "-", "")
     actions = concat(
 //    var.cloudformation_actions,
