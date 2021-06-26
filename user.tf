@@ -6,12 +6,12 @@ resource "aws_iam_user" "cicd-os" {
   }
 }
 
-data "aws_iam_policy_document" "instance-assume-role-policy" {
+data "aws_iam_policy_document" "cicd-os-assume-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
     principals {
-      type        = "Service"
-      identifiers = ["ec2.amazonaws.com"]
+      type        = "AWS"
+      identifiers = [aws_iam_user.cicd-os.arn]
     }
   }
 }
