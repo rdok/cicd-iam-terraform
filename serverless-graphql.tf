@@ -47,7 +47,7 @@ resource "aws_iam_user_policy_attachment" "serverless-graphql-serverless" {
 data "aws_iam_policy_document" "serverless-graphql-global-resources" {
   statement {
     sid       = replace("${var.serverless-graphql-cicd-iam-name}-global", "-", "")
-    actions   = concat(var.lambda_actions_global, var.sam_validate, var.apigateway_actions_global)
+    actions   = concat(var.lambda_actions_global, var.sam_validate_global, var.apigateway_actions_global)
     resources = ["*"]
   }
 }

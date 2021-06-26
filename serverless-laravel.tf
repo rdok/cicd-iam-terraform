@@ -18,7 +18,7 @@ resource "aws_iam_user" "serverless-laravel-cicd" {
 data "aws_iam_policy_document" "serverless-laravel-global-resources" {
   statement {
     sid       = replace("${var.serverless-laravel-cicd-name}-global", "-", "")
-    actions   = concat(var.lambda_actions_global, var.sam_validate, var.apigateway_actions_global)
+    actions   = concat(var.lambda_actions_global, var.sam_validate_global, var.apigateway_actions_global)
     resources = ["*"]
   }
 }

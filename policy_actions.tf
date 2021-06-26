@@ -60,7 +60,7 @@ variable "iam_sam_actions" {
 }
 
 variable "cloudformation_actions" {
-  description = "Default permission for managing cloudformation resources."
+  description = "Global permissions for managing cloudformation resources."
   default = [
     "cloudformation:CreateChangeSet",
     "cloudformation:GetTemplateSummary",
@@ -100,7 +100,7 @@ variable "schedule_actions" {
   ]
 }
 
-variable "sam_validate" {
+variable "sam_validate_global" {
   description = "Permission for running sam validate command."
   default     = ["iam:ListPolicies", ]
 }
