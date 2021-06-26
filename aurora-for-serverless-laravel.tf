@@ -189,7 +189,8 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-cdn" {
       "cloudfront:GetCloudFrontOriginAccessIdentity",
       "cloudfront:UpdateDistribution",
       "cloudfront:UpdateCloudFrontOriginAccessIdentity",
-      "cloudfront:UntagResource"
+      "cloudfront:UntagResource",
+      "cloudfront:DeleteDistribution"
     ]
     resources = ["*"]
   }
