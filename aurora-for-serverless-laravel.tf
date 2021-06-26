@@ -24,7 +24,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
 }
 
 resource "aws_iam_policy" "aurora-for-serverless-laravel-global" {
-  name   = "Global${var.aurora-for-serverless-laravel}"
+  name   = "global-${var.aurora-for-serverless-laravel}"
   path   = "/${var.org}/"
   policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
 }
@@ -54,7 +54,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
 }
 
 resource "aws_iam_policy" "aurora-for-serverless-laravel" {
-  name   = "Main${var.aurora-for-serverless-laravel}"
+  name   = "main-${var.aurora-for-serverless-laravel}"
   path   = "/${var.org}/"
   policy = data.aws_iam_policy_document.aurora-for-serverless-laravel.json
 }
