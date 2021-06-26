@@ -69,7 +69,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate" {
     sid     = replace("${var.aurora-for-serverless-laravel}-certificate", "-", "")
     actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions)
     resources = [
-      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}/*",
+      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}*/*",
       "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
