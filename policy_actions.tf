@@ -76,7 +76,7 @@ variable "secrets_generate_actions" {
   description = "Default permissions for generating secrets."
   default = [
     "secretsmanager:CreateSecret", "secretsmanager:GetSecretValue",
-    "secretsmanager:PutSecretValue"
+    "secretsmanager:PutSecretValue", "secretsmanager:DeleteSecret"
   ]
 }
 
