@@ -64,64 +64,58 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-main" {
   policy_arn = aws_iam_policy.aurora-for-serverless-laravel.arn
 }
 
-//data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate" {
-//  statement {
-//    sid     = replace("${var.aurora-for-serverless-laravel}-certificate", "-", "")
-//    actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions)
-//    resources = [
-//      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}/*",
-//      "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
-//      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
-//      "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
-//      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}",
-//    ]
-//  }
-//}
-//
-//resource "aws_iam_policy" "aurora-for-serverless-laravel-certificate" {
-//  name   = "AuthFor${var.aurora-for-serverless-laravel}Certificate"
-//path   = "/${var.org}/"
-//  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-certificate.json
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certificate" {
-//  role       = aws_iam_role.aurora-for-serverless-laravel.name
-//  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-certificate.arn
-//}
-//
-//data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate-gen" {
-//  statement {
-//    sid       = replace("${var.aurora-for-serverless-laravel}-request-certificate", "-", "")
-//    actions   = ["acm:RequestCertificate", "acm:DeleteCertificate", "acm:DescribeCertificate"]
-//    resources = ["*"]
-//  }
-//
-//  statement {
-//    sid = replace("${var.aurora-for-serverless-laravel}-change-certificate", "-", "")
-//    actions = [
-//      "route53:GetChange",
-//      "route53:GetHostedZone",
-//      "route53:ChangeResourceRecordSets"
-//    ]
-//    resources = [
-//      "arn:aws:acm:${var.org}-*-${var.aurora-for-serverless-laravel}:${var.aws_account_id}:certificate/*",
-//      "arn:aws:route53:::hostedzone/${var.base_domain_route_53_hosted_zone_id}",
-//      "arn:aws:route53:::change/*"
-//    ]
-//  }
-//}
-//
-//resource "aws_iam_policy" "aurora-for-serverless-laravel-certificate-gen" {
-//  name   = "DomainManagerFor${var.aurora-for-serverless-laravel}CertificateGen"
-//path   = "/${var.org}/"
-//  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-certificate-gen.json
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certificate-gen" {
-//  role       = aws_iam_role.aurora-for-serverless-laravel.name
-//  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-certificate-gen.arn
-//}
-//
+data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate-global" {
+  statement {
+    sid       = replace("${var.aurora-for-serverless-laravel}-certificate-global", "-", "")
+    actions   = concat(var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions)
+    resources = ["*"]
+  }
+}
+
+resource "aws_iam_policy" "aurora-for-serverless-laravel-certificate-global" {
+  name   = "${var.aurora-for-serverless-laravel}-certificate-global"
+  path   = "/${var.org}/"
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-certificate-global.json
+}
+
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certificate-global" {
+  role       = aws_iam_role.aurora-for-serverless-laravel.name
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-certificate-global.arn
+}
+
+data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate-domain" {
+  statement {
+    sid       = replace("${var.aurora-for-serverless-laravel}-certificate-domain", "-", "")
+    actions   = ["acm:RequestCertificate", "acm:DeleteCertificate", "acm:DescribeCertificate"]
+    resources = ["*"]
+  }
+
+  statement {
+    sid = replace("${var.aurora-for-serverless-laravel}-change-certificate", "-", "")
+    actions = [
+      "route53:GetChange",
+      "route53:GetHostedZone",
+      "route53:ChangeResourceRecordSets"
+    ]
+    resources = [
+      "arn:aws:acm:${var.org}-*-${var.aurora-for-serverless-laravel}:${var.aws_account_id}:certificate/*",
+      "arn:aws:route53:::hostedzone/${var.base_domain_route_53_hosted_zone_id}",
+      "arn:aws:route53:::change/*"
+    ]
+  }
+}
+
+resource "aws_iam_policy" "aurora-for-serverless-laravel-certificate-domain" {
+  name   = "${var.aurora-for-serverless-laravel}-certificate-domain"
+  path   = "/${var.org}/"
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-certificate-domain.json
+}
+
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certificate-domain" {
+  role       = aws_iam_role.aurora-for-serverless-laravel.name
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-certificate-domain.arn
+}
+
 //data "aws_iam_policy_document" "aurora-for-serverless-laravel-s3-storage" {
 //  statement {
 //    sid = replace("${var.aurora-for-serverless-laravel}-uploadToBucket", "-", "")
