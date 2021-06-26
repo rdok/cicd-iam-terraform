@@ -13,14 +13,17 @@ resource "aws_iam_role" "aurora-for-serverless-laravel" {
   tags               = { Name = var.aurora-for-serverless-laravel }
   path               = "/${var.aurora-for-serverless-laravel}/"
   assume_role_policy = ""
-  inline_policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
+  inline_policy {
+    name   = "Main"
+    policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
+  }
   //  assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
 }
 
 data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
   statement {
-    sid     = replace("${var.aurora-for-serverless-laravel}-global", "-", "")
-    actions = concat(var.lambda_actions_global, var.sam_validate, var.apigateway_actions_global)
+    sid       = replace("${var.aurora-for-serverless-laravel}-global", "-", "")
+    actions   = concat(var.lambda_actions_global, var.sam_validate, var.apigateway_actions_global)
     resources = ["*"]
   }
 }
