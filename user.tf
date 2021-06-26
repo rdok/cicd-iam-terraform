@@ -13,12 +13,8 @@ resource "aws_iam_user_policy" "cicd-allow-assume-role" {
 
 data "aws_iam_policy_document" "cicd-allow-assume-role" {
   statement {
-    sid = "AllowAssumeRole"
-    actions = [
-      "sts:AssumeRole",
-      "iam:PassRole"
-    ]
-    //    resources = ["arn:aws:iam::${var.aws_account_id}:role/${var.org}/*"]
+    sid       = "AllowAssumeRole"
+    actions   = ["sts:AssumeRole", "iam:PassRole"]
     resources = [aws_iam_role.aurora-for-serverless-laravel.arn]
   }
 }
@@ -57,18 +53,13 @@ resource "aws_iam_user_policy_attachment" "cicd-bucket" {
 
 data "aws_iam_policy_document" "cicd-bucket" {
   statement {
-    sid = replace("${var.serverless-laravel-cicd-name}-certificate", "-", "")
-    actions = concat(
-      var.cloudformation_actions,
-      //          var.iam_sam_actions,
-      var.s3_cicd_actions
-    )
+    sid     = replace("${var.cicd-name}-deploy-bucket", "-", "")
+    actions = concat(var.cloudformation_actions, var.s3_cicd_actions)
     resources = [
       "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
-//      "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
+      "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
-      //      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.serverless-laravel}",
     ]
   }
 }
