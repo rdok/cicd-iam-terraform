@@ -167,41 +167,41 @@ resource "aws_iam_policy" "aurora-for-serverless-laravel-s3-storage" {
   policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-s3-storage.json
 }
 
-//data "aws_iam_policy_document" "aurora-for-serverless-laravel-cdn" {
-//  statement {
-//    sid = replace("${var.aurora-for-serverless-laravel}-cdn", "-", "")
-//    actions = [
-//      "cloudfront:GetCloudFrontOriginAccessIdentityConfig",
-//      "cloudfront:ListCloudFrontOriginAccessIdentities",
-//      "cloudfront:TagResource",
-//      "cloudfront:DeleteCloudFrontOriginAccessIdentity",
-//      "cloudfront:CreateDistributionWithTags",
-//      "cloudfront:CreateDistribution",
-//      "cloudfront:CreateInvalidation",
-//      "cloudfront:CreateCloudFrontOriginAccessIdentity",
-//      "cloudfront:GetDistribution",
-//      "cloudfront:GetCloudFrontOriginAccessIdentity",
-//      "cloudfront:UpdateDistribution",
-//      "cloudfront:UpdateCloudFrontOriginAccessIdentity",
-//      "cloudfront:UntagResource"
-//    ]
-//    resources = ["*"]
-//  }
-//
-//  statement {
-//    sid       = replace("${var.aurora-for-serverless-laravel}-kms", "-", "")
-//    actions   = ["kms:DescribeKey", "kms:CreateGrant"]
-//    resources = ["arn:aws:kms:${var.eu_west_1}:${var.aws_account_id}:key/*"]
-//  }
-//}
-//
-//resource "aws_iam_policy" "aurora-for-serverless-laravel-cdn" {
-//  name   = "CDNFor${var.aurora-for-serverless-laravel}*"
-//path   = "/${var.org}/"
-//  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-cdn.json
-//}
-//
-//resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-cdn" {
-//  role       = aws_iam_role.aurora-for-serverless-laravel.name
-//  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-cdn.arn
-//}
+data "aws_iam_policy_document" "aurora-for-serverless-laravel-cdn" {
+  statement {
+    sid = replace("${var.aurora-for-serverless-laravel}-cdn", "-", "")
+    actions = [
+      "cloudfront:GetCloudFrontOriginAccessIdentityConfig",
+      "cloudfront:ListCloudFrontOriginAccessIdentities",
+      "cloudfront:TagResource",
+      "cloudfront:DeleteCloudFrontOriginAccessIdentity",
+      "cloudfront:CreateDistributionWithTags",
+      "cloudfront:CreateDistribution",
+      "cloudfront:CreateInvalidation",
+      "cloudfront:CreateCloudFrontOriginAccessIdentity",
+      "cloudfront:GetDistribution",
+      "cloudfront:GetCloudFrontOriginAccessIdentity",
+      "cloudfront:UpdateDistribution",
+      "cloudfront:UpdateCloudFrontOriginAccessIdentity",
+      "cloudfront:UntagResource"
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    sid       = replace("${var.aurora-for-serverless-laravel}-kms", "-", "")
+    actions   = ["kms:DescribeKey", "kms:CreateGrant"]
+    resources = ["arn:aws:kms:${var.eu_west_1}:${var.aws_account_id}:key/*"]
+  }
+}
+
+resource "aws_iam_policy" "aurora-for-serverless-laravel-cdn" {
+  name   = "CDNFor${var.aurora-for-serverless-laravel}"
+  path   = "/${var.org}/"
+  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-cdn.json
+}
+
+resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-cdn" {
+  role       = aws_iam_role.aurora-for-serverless-laravel.name
+  policy_arn = aws_iam_policy.aurora-for-serverless-laravel-cdn.arn
+}
