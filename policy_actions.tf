@@ -72,6 +72,11 @@ variable "cloudformation_actions" {
   ]
 }
 
+variable "secrets_generate_global" {
+  description = "Global permissions for generating secrets."
+  default     = ["secretsmanager:GetRandomPassword"]
+}
+
 variable "lambda_actions_global" {
   description = "Default permission for managing lambda (global) resources."
   default = [

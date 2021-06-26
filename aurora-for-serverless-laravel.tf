@@ -14,10 +14,9 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
   statement {
     sid = replace("${var.aurora-for-serverless-laravel}-global", "-", "")
     actions = concat(
-      var.lambda_actions_global,
-      var.sam_validate_global,
-      var.apigateway_actions_global,
-      var.describe_actions_global
+      var.lambda_actions_global, var.sam_validate_global,
+      var.apigateway_actions_global, var.describe_actions_global,
+      var.secrets_generate_global
     )
     resources = ["*"]
   }
@@ -38,8 +37,8 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
   statement {
     sid = replace(var.aurora-for-serverless-laravel, "-", "")
     actions = concat(
-      var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions, var.s3_cicd_actions,
-      ["secretsmanager:GetSecretValue"]
+      var.cloudformation_actions, var.iam_sam_actions, var.lambda_actions,
+      var.s3_cicd_actions
     )
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}*",
@@ -48,7 +47,6 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}*",
       "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}*",
-      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}*",
     ]
   }
 }
