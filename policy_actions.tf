@@ -85,7 +85,7 @@ variable "lambda_actions_global" {
 
 variable "apigateway_actions_global" {
   description = "Default permission for managing API Gateways."
-  default = ["apigateway:*"]
+  default     = ["apigateway:*"]
 }
 
 variable "schedule_actions" {
