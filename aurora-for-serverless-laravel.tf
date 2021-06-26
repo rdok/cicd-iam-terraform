@@ -3,11 +3,6 @@ variable "aurora-for-serverless-laravel" {
   type    = string
 }
 
-//variable "aurora-for-serverless-laravel-stack" {
-//  default = "aurora-for-serverless-laravel*"
-//  type    = string
-//}
-
 resource "aws_iam_role" "aurora-for-serverless-laravel" {
   name               = var.aurora-for-serverless-laravel
   tags               = { Name = var.aurora-for-serverless-laravel }
@@ -42,13 +37,13 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
       ["secretsmanager:GetSecretValue"]
     )
     resources = [
-      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}/*",
+      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}*/*",
       "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}",
-      "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}",
-      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}*",
+      "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}*",
+      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}*",
     ]
   }
 }
@@ -71,14 +66,14 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-certificate" {
     resources = ["*"]
   }
   statement {
-    sid     = replace("${var.serverless-laravel-cicd-name}-certificate", "-", "")
+    sid     = replace("${var.aurora-for-serverless-laravel}-certificate", "-", "")
     actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions)
     resources = [
-      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
+      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.aurora-for-serverless-laravel}/*",
       "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.serverless-laravel}",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}*",
     ]
   }
 }
@@ -137,7 +132,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certifi
 //      "s3:DeleteObject",
 //      "s3:ListMultipartUploadParts"
 //    ]
-//    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}", ]
+//    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}*", ]
 //  }
 //
 //  statement {
@@ -152,7 +147,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certifi
 //      "s3:DeleteBucket",
 //      "s3:GetBucketPolicy"
 //    ]
-//    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}"]
+//    resources = ["arn:aws:s3:::${var.org}-*-${var.aurora-for-serverless-laravel}*"]
 //  }
 //}
 //
@@ -196,7 +191,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-certifi
 //}
 //
 //resource "aws_iam_policy" "aurora-for-serverless-laravel-cdn" {
-//  name   = "CDNFor${var.aurora-for-serverless-laravel}"
+//  name   = "CDNFor${var.aurora-for-serverless-laravel}*"
 //path   = "/${var.org}/"
 //  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-cdn.json
 //}
