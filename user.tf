@@ -6,7 +6,19 @@ resource "aws_iam_user" "cicd-os" {
   }
 }
 
-data "aws_iam_policy_document" "cicd-os-assume-role-policy" {
+resource "aws_iam_user_policy" "cicd-allow-assume-role" {
+  user = aws_iam_user.cicd-os.name
+  policy = data.aws_iam_policy_document.cicd-allow-assume-role.json
+}
+
+data "aws_iam_policy_document" "cicd-allow-assume-role" {
+  statement {
+    action  = "Allow"
+    resources = [aws_iam_role.aurora-for-serverless-laravel.arn]
+  }
+}
+
+data "aws_iam_policy_document" "cicd-allow--trusted-identifiers" {
   statement {
     actions = ["sts:AssumeRole"]
     principals {
