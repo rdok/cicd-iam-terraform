@@ -12,7 +12,7 @@ resource "aws_iam_role" "aurora-for-serverless-laravel" {
   name               = var.aurora-for-serverless-laravel
   tags               = { Name = var.aurora-for-serverless-laravel }
   path               = "/${var.aurora-for-serverless-laravel}/"
-  assume_role_policy = data.aws_iam_policy_document.cicd-os-assume-role-policy.json
+  assume_role_policy = data.aws_iam_policy_document.cicd-allow--trusted-identifiers.json
 }
 
 data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
