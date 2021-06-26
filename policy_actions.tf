@@ -74,12 +74,20 @@ variable "cloudformation_actions" {
 
 variable "secrets_generate_actions" {
   description = "Default permissions for generating secrets."
-    default     = ["secretsmanager:CreateSecret", "secretsmanager:GetSecretValue"]
+    default     = [
+      "secretsmanager:CreateSecret", "secretsmanager:GetSecretValue",
+      "secretsmanager:PutSecretValue"
+    ]
 }
 
 variable "secrets_generate_actions_global" {
   description = "Global permissions for generating secrets."
   default     = ["secretsmanager:GetRandomPassword"]
+}
+
+variable "vpc_endpoints_global" {
+  description = "Global permissions for managing vpc endpoints."
+  default     = ["ec2:CreateVpcEndpoint"]
 }
 
 variable "aurora_actions" {
