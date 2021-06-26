@@ -11,7 +11,7 @@ variable "aurora-for-serverless-laravel" {
 resource "aws_iam_role" "aurora-for-serverless-laravel" {
   name               = var.aurora-for-serverless-laravel
   tags               = { Name = var.aurora-for-serverless-laravel }
-  path               = "/${var.aurora-for-serverless-laravel}/"
+  path               = "/${var.org}/"
   assume_role_policy = data.aws_iam_policy_document.cicd-allow--trusted-identifiers.json
 }
 
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel-global" {
 
 resource "aws_iam_policy" "aurora-for-serverless-laravel-global" {
   name   = "GlobalFor${var.aurora-for-serverless-laravel}"
-  path   = "/${var.aurora-for-serverless-laravel}/"
+  path   = "/${var.org}/"
   policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-global.json
 }
 
@@ -55,7 +55,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global"
 //
 //resource "aws_iam_policy" "aurora-for-serverless-laravel" {
 //  name   = "AuthFor${var.aurora-for-serverless-laravel}"
-//  path   = "/${var.aurora-for-serverless-laravel}/"
+//path   = "/${var.org}/"
 //  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel.json
 //}
 //
@@ -80,7 +80,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global"
 //
 //resource "aws_iam_policy" "aurora-for-serverless-laravel-certificate" {
 //  name   = "AuthFor${var.aurora-for-serverless-laravel}Certificate"
-//  path   = "/${var.aurora-for-serverless-laravel}/"
+//path   = "/${var.org}/"
 //  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-certificate.json
 //}
 //
@@ -113,7 +113,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global"
 //
 //resource "aws_iam_policy" "aurora-for-serverless-laravel-certificate-gen" {
 //  name   = "DomainManagerFor${var.aurora-for-serverless-laravel}CertificateGen"
-//  path   = "/${var.aurora-for-serverless-laravel}/"
+//path   = "/${var.org}/"
 //  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-certificate-gen.json
 //}
 //
@@ -158,7 +158,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global"
 //
 //resource "aws_iam_policy" "aurora-for-serverless-laravel-s3-storage" {
 //  name   = "${var.aurora-for-serverless-laravel}ForS3Storage"
-//  path   = "/${var.aurora-for-serverless-laravel}/"
+//path   = "/${var.org}/"
 //  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-s3-storage.json
 //}
 //
@@ -192,7 +192,7 @@ resource "aws_iam_role_policy_attachment" "aurora-for-serverless-laravel-global"
 //
 //resource "aws_iam_policy" "aurora-for-serverless-laravel-cdn" {
 //  name   = "CDNFor${var.aurora-for-serverless-laravel}"
-//  path   = "/${var.aurora-for-serverless-laravel}/"
+//path   = "/${var.org}/"
 //  policy = data.aws_iam_policy_document.aurora-for-serverless-laravel-cdn.json
 //}
 //
