@@ -47,6 +47,7 @@ data "aws_iam_policy_document" "aurora-for-serverless-laravel" {
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.aurora-for-serverless-laravel}*",
       "arn:aws:lambda:${var.eu_west_1}:${var.aws_account_id}:function:${var.org}-*-${var.aurora-for-serverless-laravel}*",
+      "arn:aws:secretsmanager:${var.eu_west_1}:${var.aws_account_id}:secret:${var.org}-*-${var.aurora-for-serverless-laravel}*",
     ]
   }
 }
