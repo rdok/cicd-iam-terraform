@@ -53,7 +53,11 @@ data "aws_iam_policy_document" "cicd-bucket" {
   }
   statement {
     sid     = replace("${var.serverless-laravel-cicd-name}-certificate", "-", "")
-    actions = concat(var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions)
+    actions = concat(
+//    var.cloudformation_actions,
+    var.iam_sam_actions,
+//    var.s3_cicd_actions
+    )
     resources = [
 //      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.serverless-laravel}/*",
 //      "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
