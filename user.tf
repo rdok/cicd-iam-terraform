@@ -1,6 +1,9 @@
 resource "aws_iam_user" "cicd-os" {
   name = var.cicd-name
-  tags = { Name = var.cicd-name }
+  tags = {
+    Name = var.cicd-name ,
+    Description = "Common CI/CD user for many repositories."
+  }
 }
 
 //data "aws_iam_policy_document" "instance-assume-role-policy" {
