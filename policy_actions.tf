@@ -84,7 +84,7 @@ variable "secrets_generate_actions_global" {
 
 variable "aurora_actions" {
   description = "Defaults permissions for managing aurora."
-  default     = ["rds:CreateDBCluster"]
+  default     = ["rds:CreateDBCluster", "rds:DescribeDBClusters"]
 }
 
 variable "lambda_actions_global" {
