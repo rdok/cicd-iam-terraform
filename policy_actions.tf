@@ -60,12 +60,12 @@ variable "iam_sam_actions" {
 }
 
 variable "cloudformation_actions" {
-  description = "Global permissions for managing cloudformation resources."
+  description = "Default permissions for managing cloudformation resources."
   default = [
     "cloudformation:CreateChangeSet", "cloudformation:GetTemplateSummary",
     "cloudformation:DescribeStacks", "cloudformation:DescribeStackEvents",
     "cloudformation:DeleteStack", "cloudformation:DescribeChangeSet",
-    "cloudformation:ExecuteChangeSet", "cloudformation:ListStacks"
+    "cloudformation:ExecuteChangeSet",
   ]
 }
 
@@ -148,9 +148,9 @@ variable "sqs_actions" {
   ]
 }
 
-variable "stack_output_actions" {
-  description = "Permission for accessing outputs."
-  default     = ["cloudformation:DescribeStacks", ]
+variable "cloudformation_actions_global" {
+  description = "Global permissions for cloudformation."
+  default     = ["cloudformation:ListStacks", ]
 }
 
 variable "sns_subscribe_actions" {
