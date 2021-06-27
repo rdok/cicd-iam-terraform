@@ -62,13 +62,10 @@ variable "iam_sam_actions" {
 variable "cloudformation_actions" {
   description = "Global permissions for managing cloudformation resources."
   default = [
-    "cloudformation:CreateChangeSet",
-    "cloudformation:GetTemplateSummary",
-    "cloudformation:DescribeStacks",
-    "cloudformation:DescribeStackEvents",
-    "cloudformation:DeleteStack",
-    "cloudformation:DescribeChangeSet",
-    "cloudformation:ExecuteChangeSet",
+    "cloudformation:CreateChangeSet", "cloudformation:GetTemplateSummary",
+    "cloudformation:DescribeStacks", "cloudformation:DescribeStackEvents",
+    "cloudformation:DeleteStack", "cloudformation:DescribeChangeSet",
+    "cloudformation:ExecuteChangeSet", "cloudformation:ListStacks"
   ]
 }
 
