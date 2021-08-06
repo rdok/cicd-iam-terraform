@@ -4,13 +4,13 @@ variable "basawal-website" {
   description = "'basawal' stands for Build a Serverless App with AWS Lambda, and is used for kata."
 }
 
-variable "basawal-web-app-stack-locator" {
-  default     = "basawal-web-app*"
+variable "basawal-website-stack-locator" {
+  default     = "basawal-website*"
   description = "The AWS SAM shortened stack name."
   type        = string
 }
 
-resource "aws_iam_role" "basawal-web-app" {
+resource "aws_iam_role" "basawal-website" {
   name               = var.basawal-website
   description        = "The role which the CD will assume."
   tags               = { Name = var.basawal-website }
@@ -18,7 +18,7 @@ resource "aws_iam_role" "basawal-web-app" {
   assume_role_policy = data.aws_iam_policy_document.cicd-allow--trusted-identifiers.json
 }
 
-data "aws_iam_policy_document" "basawal-web-app-global" {
+data "aws_iam_policy_document" "basawal-website-global" {
   statement {
     sid = replace("${var.basawal-website}-global", "-", "")
     actions = concat(
@@ -29,45 +29,45 @@ data "aws_iam_policy_document" "basawal-web-app-global" {
   }
 }
 
-resource "aws_iam_policy" "basawal-web-app-global" {
+resource "aws_iam_policy" "basawal-website-global" {
   name   = "${var.basawal-website}-global"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-web-app-global.json
+  policy = data.aws_iam_policy_document.basawal-website-global.json
 }
 
-resource "aws_iam_role_policy_attachment" "basawal-web-app-global" {
-  role       = aws_iam_role.basawal-web-app.name
-  policy_arn = aws_iam_policy.basawal-web-app-global.arn
+resource "aws_iam_role_policy_attachment" "basawal-website-global" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website-global.arn
 }
 
-data "aws_iam_policy_document" "basawal-web-app" {
+data "aws_iam_policy_document" "basawal-website" {
   statement {
     sid = replace(var.basawal-website, "-", "")
     actions = concat(
       var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions
     )
     resources = [
-      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-web-app-stack-locator}",
+      "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-website-stack-locator}",
       "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
-      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/${var.basawal-web-app-stack-locator}",
-      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/${var.basawal-web-app-stack-locator}",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-web-app-stack-locator}",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/${var.basawal-website-stack-locator}",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/${var.basawal-website-stack-locator}",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-website-stack-locator}",
     ]
   }
 }
 
-resource "aws_iam_policy" "basawal-web-app" {
+resource "aws_iam_policy" "basawal-website" {
   name   = "${var.basawal-website}-main"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-web-app.json
+  policy = data.aws_iam_policy_document.basawal-website.json
 }
 
-resource "aws_iam_role_policy_attachment" "basawal-web-app-main" {
-  role       = aws_iam_role.basawal-web-app.name
-  policy_arn = aws_iam_policy.basawal-web-app.arn
+resource "aws_iam_role_policy_attachment" "basawal-website-main" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website.arn
 }
 
-data "aws_iam_policy_document" "basawal-web-app-certificate" {
+data "aws_iam_policy_document" "basawal-website-certificate" {
   statement {
     sid = replace("${var.basawal-website}-certificate-global", "-", "")
     actions = concat(
@@ -81,27 +81,27 @@ data "aws_iam_policy_document" "basawal-web-app-certificate" {
       var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions
     )
     resources = [
-      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-web-app-stack-locator}",
+      "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-website-stack-locator}",
       "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
-      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/${var.basawal-web-app-stack-locator}",
-      "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/${var.basawal-web-app-stack-locator}",
-      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-web-app-stack-locator}",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/${var.basawal-website-stack-locator}",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/${var.basawal-website-stack-locator}",
+      "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-website-stack-locator}",
     ]
   }
 }
 
-resource "aws_iam_policy" "basawal-web-app-certificate" {
+resource "aws_iam_policy" "basawal-website-certificate" {
   name   = "${var.basawal-website}-certificate"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-web-app-certificate.json
+  policy = data.aws_iam_policy_document.basawal-website-certificate.json
 }
 
-resource "aws_iam_role_policy_attachment" "basawal-web-app-certificate-global" {
-  role       = aws_iam_role.basawal-web-app.name
-  policy_arn = aws_iam_policy.basawal-web-app-certificate.arn
+resource "aws_iam_role_policy_attachment" "basawal-website-certificate-global" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website-certificate.arn
 }
 
-data "aws_iam_policy_document" "basawal-web-app-certificate-domain" {
+data "aws_iam_policy_document" "basawal-website-certificate-domain" {
   statement {
     sid = replace("${var.basawal-website}-certificate-domain", "-", "")
     actions = [
@@ -126,18 +126,18 @@ data "aws_iam_policy_document" "basawal-web-app-certificate-domain" {
   }
 }
 
-resource "aws_iam_policy" "basawal-web-app-certificate-domain" {
+resource "aws_iam_policy" "basawal-website-certificate-domain" {
   name   = "${var.basawal-website}-certificate-domain"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-web-app-certificate-domain.json
+  policy = data.aws_iam_policy_document.basawal-website-certificate-domain.json
 }
 
-resource "aws_iam_role_policy_attachment" "basawal-web-app-certificate-domain" {
-  role       = aws_iam_role.basawal-web-app.name
-  policy_arn = aws_iam_policy.basawal-web-app-certificate-domain.arn
+resource "aws_iam_role_policy_attachment" "basawal-website-certificate-domain" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website-certificate-domain.arn
 }
 
-data "aws_iam_policy_document" "basawal-web-app-s3" {
+data "aws_iam_policy_document" "basawal-website-s3" {
   statement {
     sid = replace("${var.basawal-website}-uploadToBucket", "-", "")
     actions = [
@@ -145,7 +145,7 @@ data "aws_iam_policy_document" "basawal-web-app-s3" {
       "s3:DeleteObject", "s3:ListMultipartUploadParts"
     ]
     resources = [
-      "arn:aws:s3:::${var.org}-*-${var.basawal-web-app-stack-locator}",
+      "arn:aws:s3:::${var.org}-*-${var.basawal-website-stack-locator}",
     ]
   }
 
@@ -157,23 +157,23 @@ data "aws_iam_policy_document" "basawal-web-app-s3" {
       "s3:DeleteBucket", "s3:GetBucketPolicy"
     ]
     resources = [
-      "arn:aws:s3:::${var.org}-*-${var.basawal-web-app-stack-locator}"
+      "arn:aws:s3:::${var.org}-*-${var.basawal-website-stack-locator}"
     ]
   }
 }
 
-resource "aws_iam_role_policy_attachment" "basawal-web-app-s3" {
-  role       = aws_iam_role.basawal-web-app.name
-  policy_arn = aws_iam_policy.basawal-web-app-s3.arn
+resource "aws_iam_role_policy_attachment" "basawal-website-s3" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website-s3.arn
 }
 
-resource "aws_iam_policy" "basawal-web-app-s3" {
+resource "aws_iam_policy" "basawal-website-s3" {
   name   = "${var.basawal-website}-s3"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-web-app-s3.json
+  policy = data.aws_iam_policy_document.basawal-website-s3.json
 }
 
-data "aws_iam_policy_document" "basawal-web-app-cdn" {
+data "aws_iam_policy_document" "basawal-website-cdn" {
   statement {
     sid = replace("${var.basawal-website}-cdn", "-", "")
     actions = [
@@ -204,13 +204,13 @@ data "aws_iam_policy_document" "basawal-web-app-cdn" {
   }
 }
 
-resource "aws_iam_policy" "basawal-web-app-cdn" {
+resource "aws_iam_policy" "basawal-website-cdn" {
   name   = "CDNFor${var.basawal-website}"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-web-app-cdn.json
+  policy = data.aws_iam_policy_document.basawal-website-cdn.json
 }
 
-resource "aws_iam_role_policy_attachment" "basawal-web-app-cdn" {
-  role       = aws_iam_role.basawal-web-app.name
-  policy_arn = aws_iam_policy.basawal-web-app-cdn.arn
+resource "aws_iam_role_policy_attachment" "basawal-website-cdn" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website-cdn.arn
 }
