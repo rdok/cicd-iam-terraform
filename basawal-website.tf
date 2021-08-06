@@ -49,8 +49,8 @@ data "aws_iam_policy_document" "basawal-web-app" {
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-web-app-stack-locator}",
       "arn:aws:cloudformation:${var.eu_west_1}:aws:transform/Serverless-2016-10-31",
-      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/*",
-      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/${var.basawal-web-app-stack-locator}",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/${var.basawal-web-app-stack-locator}",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-web-app-stack-locator}",
     ]
   }
@@ -83,8 +83,8 @@ data "aws_iam_policy_document" "basawal-web-app-certificate" {
     resources = [
       "arn:aws:cloudformation:${var.us_east_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-web-app-stack-locator}",
       "arn:aws:cloudformation:${var.us_east_1}:aws:transform/Serverless-2016-10-31",
-      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/*",
-      "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/*",
+      "arn:aws:s3:::${aws_s3_bucket.prod-cicd-us-east-1.bucket}/${var.basawal-web-app-stack-locator}",
+      "arn:aws:s3:::${aws_s3_bucket.test-cicd-us-east-1.bucket}/${var.basawal-web-app-stack-locator}",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-web-app-stack-locator}",
     ]
   }
