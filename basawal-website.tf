@@ -1,6 +1,6 @@
 variable "basawal-website" {
-  default = "basawal-website"
-  type    = string
+  default     = "basawal-website"
+  type        = string
   description = "'basawal' stands for Build a Serverless App with AWS Lambda, and is used for kata."
 }
 
@@ -44,7 +44,8 @@ data "aws_iam_policy_document" "basawal-website" {
   statement {
     sid = replace(var.basawal-website, "-", "")
     actions = concat(
-      var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions
+      var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions,
+      var.static_website
     )
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-website-stack-locator}",
@@ -52,6 +53,7 @@ data "aws_iam_policy_document" "basawal-website" {
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/${var.basawal-website-stack-locator}",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/${var.basawal-website-stack-locator}",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-website-stack-locator}",
+      "arn:aws:s3:::${var.org}-*-${var.basawal-website-stack-locator}",
     ]
   }
 }

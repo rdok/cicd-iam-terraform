@@ -15,6 +15,22 @@ variable "sns_actions" {
   ]
 }
 
+variable "static_website" {
+  description = "Default permission for S3 websites."
+  default = [
+    "s3:GetBucketPolicyStatus",
+    "s3:DeleteBucketWebsite",
+    "s3:PutBucketWebsite",
+    "s3:PutBucketAcl",
+    "s3:PutBucketPolicy",
+    "s3:CreateBucket",
+    "s3:GetBucketAcl",
+    "s3:DeleteBucketPolicy",
+    "s3:DeleteBucket",
+    "s3:GetBucketPolicy"
+  ]
+}
+
 variable "s3_cicd_actions" {
   description = "Default permission for saving CI/CD artifacts."
   default     = ["s3:PutObject", "s3:GetObject", ]
@@ -150,7 +166,7 @@ variable "sqs_actions" {
 
 variable "cloudformation_actions_global" {
   description = "Global permissions for cloudformation."
-  default     = [
+  default = [
     "cloudformation:ListStacks",
     "cloudformation:DescribeStacks", // get outputs from any stack
   ]
