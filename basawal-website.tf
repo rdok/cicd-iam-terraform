@@ -44,8 +44,7 @@ data "aws_iam_policy_document" "basawal-website" {
   statement {
     sid = replace(var.basawal-website, "-", "")
     actions = concat(
-      var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions,
-      var.static_website
+      var.cloudformation_actions, var.iam_sam_actions, var.s3_cicd_actions
     )
     resources = [
       "arn:aws:cloudformation:${var.eu_west_1}:${var.aws_account_id}:stack/${var.org}-*-${var.basawal-website-stack-locator}",
@@ -53,7 +52,6 @@ data "aws_iam_policy_document" "basawal-website" {
       "arn:aws:s3:::${aws_s3_bucket.prod-cicd-eu-west-1.bucket}/${var.basawal-website-stack-locator}",
       "arn:aws:s3:::${aws_s3_bucket.test-cicd-eu-west-1.bucket}/${var.basawal-website-stack-locator}",
       "arn:aws:iam::${var.aws_account_id}:role/${var.org}-*-${var.basawal-website-stack-locator}",
-      "arn:aws:s3:::${var.org}-*-${var.basawal-website-stack-locator}",
     ]
   }
 }
@@ -216,4 +214,25 @@ resource "aws_iam_policy" "basawal-website-cdn" {
 resource "aws_iam_role_policy_attachment" "basawal-website-cdn" {
   role       = aws_iam_role.basawal-website.name
   policy_arn = aws_iam_policy.basawal-website-cdn.arn
+}
+
+data "aws_iam_policy_document" "basawal-website-static" {
+  statement {
+    sid = replace(var.basawal-website, "-", "")
+    actions = concat( var.static_website )
+    resources = [
+      "arn:aws:s3:::${var.org}-*-${var.basawal-website-stack-locator}",
+    ]
+  }
+}
+
+resource "aws_iam_policy" "basawal-website-static" {
+  name   = "${var.basawal-website}-static"
+  path   = "/${var.org}/"
+  policy = data.aws_iam_policy_document.basawal-website.json
+}
+
+resource "aws_iam_role_policy_attachment" "basawal-website-static" {
+  role       = aws_iam_role.basawal-website.name
+  policy_arn = aws_iam_policy.basawal-website.arn
 }
