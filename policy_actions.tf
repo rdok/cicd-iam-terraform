@@ -150,7 +150,10 @@ variable "sqs_actions" {
 
 variable "cloudformation_actions_global" {
   description = "Global permissions for cloudformation."
-  default     = ["cloudformation:ListStacks", ]
+  default     = [
+    "cloudformation:ListStacks",
+    "cloudformation:DescribeStacks", // get outputs from any stack
+  ]
 }
 
 variable "sns_subscribe_actions" {
