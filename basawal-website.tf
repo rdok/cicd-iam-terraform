@@ -190,7 +190,8 @@ data "aws_iam_policy_document" "basawal-website-cdn" {
       "cloudfront:UpdateDistribution",
       "cloudfront:UpdateCloudFrontOriginAccessIdentity",
       "cloudfront:UntagResource",
-      "cloudfront:DeleteDistribution"
+      "cloudfront:DeleteDistribution",
+      "cloudfront:ListTagsForResource",
     ]
     resources = ["*"]
   }
