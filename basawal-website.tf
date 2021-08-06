@@ -205,7 +205,7 @@ data "aws_iam_policy_document" "basawal-website-cdn" {
 }
 
 resource "aws_iam_policy" "basawal-website-cdn" {
-  name   = "CDNFor${var.basawal-website}"
+  name   = "CDN_For${var.basawal-website}"
   path   = "/${var.org}/"
   policy = data.aws_iam_policy_document.basawal-website-cdn.json
 }
