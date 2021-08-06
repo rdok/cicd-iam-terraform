@@ -229,7 +229,7 @@ data "aws_iam_policy_document" "basawal-website-static" {
 resource "aws_iam_policy" "basawal-website-static" {
   name   = "${var.basawal-website}-static"
   path   = "/${var.org}/"
-  policy = data.aws_iam_policy_document.basawal-website.json
+  policy = data.aws_iam_policy_document.basawal-website-static.json
 }
 
 resource "aws_iam_role_policy_attachment" "basawal-website-static" {
