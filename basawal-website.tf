@@ -234,5 +234,5 @@ resource "aws_iam_policy" "basawal-website-static" {
 
 resource "aws_iam_role_policy_attachment" "basawal-website-static" {
   role       = aws_iam_role.basawal-website.name
-  policy_arn = aws_iam_policy.basawal-website.arn
+  policy_arn = aws_iam_policy.basawal-website-static.arn
 }
